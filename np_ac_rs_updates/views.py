@@ -42,7 +42,7 @@ def uzmi_novosti(request):
     return HttpResponse(response)
 
 
-# kada korisnik instalira aplikaciju
+# kada korisnik instalira aplikaciju i unese moodle podatke, odabrane departmane, pretplate i vesti
 @csrf_exempt
 @require_http_methods(["POST","PUT"])
 def prijava_studenta(request):
@@ -52,11 +52,15 @@ def prijava_studenta(request):
         lozinka = make_password(data.get('lozinka'))
         fcm_token = data.get('fcm_token')
         pretplate = data.get('pretplate')
+        departmani = data.get('departmani')
+        smerovi = data.get('smerovi')
 
         novi = {
             "lozinka": lozinka,
             "fcm_token": fcm_token,
-            "pretplate": pretplate
+            "pretplate": pretplate,
+            "departmani": departmani,
+            "smerovi": smerovi
         }
         student, created = Student.objects.update_or_create(email=email,defaults=novi)
         return HttpResponse("Uspeh pri prijavi.")
@@ -85,7 +89,7 @@ def izmena_pretplata(request):
 
 
 @csrf_exempt
-@require_http_methods(["POST"]) #metoda za izmenu pretplata
+@require_http_methods(["POST"]) #metoda za probu notifikacije
 def posalji_notifikaciju(request):
     try:
         data = json.loads(request.body)
@@ -96,3 +100,5 @@ def posalji_notifikaciju(request):
         return HttpResponse("Poslana notifikacija")
     except:
         return HttpResponse("Neuspeh")
+
+

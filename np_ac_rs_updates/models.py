@@ -19,3 +19,5 @@ class Student(models.Model):
     lozinka = models.CharField(max_length=255)
     fcm_token = models.CharField(blank=False, max_length=255) 
     pretplate = models.TextField(default="", null=False)
+    smerovi = models.TextField(default="", null=False)
+    departmani = models.TextField(default="", null=False)

@@ -4,6 +4,7 @@ from .departmani_crawler import uzmi_sve_podatke_o_departmanima
 from .obavestenja_i_vesti_feed_parser import uzmi_obavestenja_i_vesti
 from .nastavni_materijali_crawler import fetchuj_sve_nastvne_matrijale
 from .instagram_api.get_insta_posts import uzmi_sve_nove_instagram_postove
+from .send_notifications import send_notification, send_notification_filter
 
 # Ovaj modul uzima sve novosti sa np.ac.rs i instagrama i unosi ih u bazu ako su stvarno novi
 # Da li je nesto novo ili ne odlucuje se razicitno za svaki tip novosti
@@ -58,6 +59,7 @@ def popuni_bazu():
                 q = Novost.objects.filter(link=novost['link'], datum=datum)
                 if q.count() == 0:
                     sta_je_dodato_u_bazu.append(novost)
+                    send_notification_filter(novost['naslov'], novost['opis'], novost['tip']) #kada dodje nova novost, posalji korisniku koji prati to...
                     n = Novost(tip=novost['tip'], naslov=novost['naslov'], opis=novost['opis'], link=novost['link'], datum=datum)
                     n.save()
             elif tip_novosti == 'obavestenja' or tip_novosti == 'vesti':
@@ -66,15 +68,18 @@ def popuni_bazu():
                 q = Novost.objects.filter(link=novost['link'])
                 if q.count() == 0:
                     sta_je_dodato_u_bazu.append(novost)
+                    send_notification_filter(novost['naslov'], novost['opis'], novost['tip']) #kada dodje nova novost, posalji korisniku koji prati to...
                     n = Novost(tip=novost['tip'], naslov=novost['naslov'], opis=novost['naslov'], link=novost['link'], datum=datum)
                     n.save()
             elif tip_novosti == 'termini konsultacija' or tip_novosti == 'obavestenja smera':
                 q = Novost.objects.filter(link=novost['link'], hash_value=novost['hash_value'])
                 if q.count() == 0:
                     sta_je_dodato_u_bazu.append(novost)
+                    send_notification_filter(novost['naslov'], novost['opis'], novost['tip']) #kada dodje nova novost, posalji korisniku koji prati to...
                     n = Novost(tip=novost['tip'], naslov=novost['naslov'], opis=novost['naslov'], link=novost['link'], datum=datum, hash_value=novost['hash_value'])
                     n.save()
             elif tip_novosti == 'instagram':
+                send_notification_filter(novost['naslov'], novost['opis'], novost['tip']) #kada dodje nova novost, posalji korisniku koji prati to...
                 n = Novost(tip=novost['tip'], naslov=novost['naslov'], opis=novost['opis'], link=novost['link'], datum=datum, hash_value=novost['id'])
                 n.save()
         except Exception as e:
