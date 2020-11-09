@@ -4,7 +4,7 @@ from .models import Student
 
 def send_notification_filter(title, message, tip): #ovde jos da se filtrira po departmanima
     try:
-        
+
         emailovi = Student.objects.filter(pretplate__icontains=tip).values_list('email', flat=True) #uzmi studente koji medju pretplatama imaju tip vesti koja stize, i njima posalji 
         lista = list(emailovi)
 
@@ -14,7 +14,7 @@ def send_notification_filter(title, message, tip): #ovde jos da se filtrira po d
         pass
 
 
-def send_notification(title, message):
+def send_notification_test(title, message):
     devices = FCMDevice.objects.all()
     devices.send_message(title=title, body=message, sound=True)
 

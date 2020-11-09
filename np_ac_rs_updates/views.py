@@ -42,7 +42,7 @@ def uzmi_novosti(request):
     return HttpResponse(response)
 
 
-# kada korisnik instalira aplikaciju i unese moodle podatke, odabrane departmane, pretplate i vesti
+# kada korisnik instalira aplikaciju i unese moodle podatke, odabrane departmane, pretplate i vesti, cuva se i fcm token iz firebase-a
 @csrf_exempt
 @require_http_methods(["POST","PUT"])
 def prijava_studenta(request):
@@ -71,7 +71,7 @@ def prijava_studenta(request):
     
 
 @csrf_exempt
-@require_http_methods(["PUT"]) #metoda za izmenu pretplata
+@require_http_methods(["PUT"]) #metoda za izmenu pretplata na serveru, poziva se kada korisnik na frontendu promeni pretplate
 def izmena_pretplata(request):
     try:
         data = json.loads(request.body)

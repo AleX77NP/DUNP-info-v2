@@ -4,7 +4,7 @@ from .departmani_crawler import uzmi_sve_podatke_o_departmanima
 from .obavestenja_i_vesti_feed_parser import uzmi_obavestenja_i_vesti
 from .nastavni_materijali_crawler import fetchuj_sve_nastvne_matrijale
 from .instagram_api.get_insta_posts import uzmi_sve_nove_instagram_postove
-from .send_notifications import send_notification, send_notification_filter
+from .send_notifications import send_notification_test, send_notification_filter
 
 # Ovaj modul uzima sve novosti sa np.ac.rs i instagrama i unosi ih u bazu ako su stvarno novi
 # Da li je nesto novo ili ne odlucuje se razicitno za svaki tip novosti
