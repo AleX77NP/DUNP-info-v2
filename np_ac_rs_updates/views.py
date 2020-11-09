@@ -7,7 +7,7 @@ from .models import Novost, Student
 from django.core import serializers
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
-from .send_notifications import send_notification
+from .send_notifications import send_notification_test, send_notification_filter
 
 def azuriraj_bazu(request):
     try:

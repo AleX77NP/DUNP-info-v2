@@ -7,7 +7,7 @@ i poziva se sa: python manage.py update_task
 """
 from django.core.management.base import BaseCommand, CommandError
 from np_ac_rs_updates.popuni_bazu import popuni_bazu
-from np_ac_rs_updates.send_notifications import send_notification
+from np_ac_rs_updates.send_notifications import send_notification_filter, send_notification_test
 
 class Command(BaseCommand):
     # help = 'Closes the specified poll for voting'
