@@ -15,7 +15,7 @@ def send_notification_filter(title, message, tip):
         else: #filtrira slanje, ako u smerovima studenta ili departmanima ima taj smer/departman za koji je dosla novost, salje mu se
             for student in studenti:
                 smerovi = student.smerovi.split()
-                departmani = student.departmani.split('-')
+                departmani = student.departmani.split('_')
             
                 print(smerovi)
                 print(departmani)
