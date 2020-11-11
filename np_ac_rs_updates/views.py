@@ -52,13 +52,15 @@ def prijava_studenta(request):
         lozinka = make_password(data.get('lozinka'))
         fcm_token = data.get('fcm_token')
         pretplate = data.get('pretplate')
-        smerovi_departmani = data.get('smerovi_departmani')
+        smerovi_departmani = data.get('smerovi')
+        departmani = data.get('departmani')
 
         novi = {
             "lozinka": lozinka,
             "fcm_token": fcm_token,
             "pretplate": pretplate,
-            "smerovi_departmani": smerovi_departmani
+            "smerovi": smerovi,
+            "departmani": departmani
         }
         student, created = Student.objects.update_or_create(email=email,defaults=novi)
         return HttpResponse("Uspeh pri prijavi.")
@@ -76,7 +78,7 @@ def izmena_pretplata(request):
         email = data.get('email')
         pretplate = data.get('pretplate')
         smerovi = data.get('smerovi')
-        departmani = data.get('smerovi')
+        departmani = data.get('departmani)
         if len(Student.objects.filter(email=email)) == 0:
             return HttpResponse("Student ne postoji u bazi.")
         else:
