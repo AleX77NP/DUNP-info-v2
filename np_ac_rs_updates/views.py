@@ -78,7 +78,7 @@ def izmena_pretplata(request):
         email = data.get('email')
         pretplate = data.get('pretplate')
         smerovi = data.get('smerovi')
-        departmani = data.get('departmani)
+        departmani = data.get('departmani')
         if len(Student.objects.filter(email=email)) == 0:
             return HttpResponse("Student ne postoji u bazi.")
         else:
