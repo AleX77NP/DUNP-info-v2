@@ -9,12 +9,14 @@ def send_notification_filter(title, message, tip):
 
         lista = list(emailovi)
 
+        #filtrira slanje, ako u smerovima studenta ili departmanima ima taj smer/departman za koji je dosla novost, salje mu se
+
         if tip == "vesti" or tip == "obavestenja" or tip == "instagram":
             devices = FCMDevice.objects.filter(name__in=lista)
             devices.send_message(title=title, body=message, sound=True)
-        else: #filtrira slanje, ako u smerovima studenta ili departmanima ima taj smer/departman za koji je dosla novost, salje mu se
+        else:
             for student in studenti:
-                smerovi = student.smerovi.split()
+                smerovi = student.smerovi.split('_')
                 departmani = student.departmani.split('_')
             
                 print(smerovi)
