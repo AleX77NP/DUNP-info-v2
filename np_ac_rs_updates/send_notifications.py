@@ -9,7 +9,7 @@ def send_notification_filter(title, message, tip):
 
         lista = list(emailovi)
 
-        if tip == "vesti" or tip == "obavestenja":
+        if tip == "vesti" or tip == "obavestenja" or tip == "instagram":
             devices = FCMDevice.objects.filter(name__in=lista)
             devices.send_message(title=title, body=message, sound=True)
         else: #filtrira slanje, ako u smerovima studenta ili departmanima ima taj smer/departman za koji je dosla novost, salje mu se
