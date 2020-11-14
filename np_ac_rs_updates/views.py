@@ -8,6 +8,7 @@ from django.core import serializers
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
 from .send_notifications import send_notification_test, send_notification_filter
+from fcm_django.models import FCMDevice
 
 def azuriraj_bazu(request):
     try:
@@ -52,8 +53,11 @@ def prijava_studenta(request):
         lozinka = make_password(data.get('lozinka'))
         fcm_token = data.get('fcm_token')
         pretplate = data.get('pretplate')
-        smerovi_departmani = data.get('smerovi')
+        smerovi = data.get('smerovi')
         departmani = data.get('departmani')
+
+
+        FCMDevice.objects.create(name=email, type="ios", registration_id=fcm_token)
 
         novi = {
             "lozinka": lozinka,
@@ -77,12 +81,14 @@ def izmena_pretplata(request):
         data = json.loads(request.body)
         email = data.get('email')
         pretplate = data.get('pretplate')
+        fcm_token = data.get('fcm_token')
         smerovi = data.get('smerovi')
         departmani = data.get('departmani')
         if len(Student.objects.filter(email=email)) == 0:
             return HttpResponse("Student ne postoji u bazi.")
         else:
-            Student.objects.filter(email=email).update(pretplate=pretplate, smerovi=smerovi, departmani=departmani)
+            Student.objects.filter(email=email).update(pretplate=pretplate, smerovi=smerovi, departmani=departmani, fcm_token=fcm_token)
+            FCMDevice.objects.filter(name=email).update(registration_id=fcm_token)
             return HttpResponse("Uspeh pri izmeni pretplata.")
 
     except Exception as e:
